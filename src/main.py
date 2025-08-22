@@ -1,7 +1,7 @@
 from utils import normalizar_nivel
 from cuento_generator import generar_cuento
 from audio_generator import AudioGenerator
-# from imagen_generator import generar_imagen  # Descomenta cuando tengas este módulo
+from imagen_generator import generar_imagen
 
 def main():
     audio_gen = AudioGenerator()  # Crear una sola instancia
@@ -31,8 +31,18 @@ def main():
         ################
         print("\n🎵 Generando audio... por favor espera")
         
-        # Pasar tema y nivel para un mejor nombre de archivo
-        audio_path = audio_gen.generar_audio(cuento, tema, nivel)
+        # Crear nombre de archivo para el audio
+        from datetime import datetime
+        import os
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        tema_limpio = "".join(c for c in tema if c.isalnum() or c in (' ', '-', '_')).rstrip()
+        tema_limpio = tema_limpio.replace(' ', '_')[:20]
+        nombre_archivo = f"audios_cuentos/{tema_limpio}_{nivel}_{timestamp}.mp3"
+        
+        # Crear directorio si no existe
+        os.makedirs("audios_cuentos", exist_ok=True)
+        
+        audio_path = audio_gen.generar_audio(cuento, nombre_archivo)
         
         if audio_path:
             print(f"Audio listo para escuchar: {audio_path}")
@@ -42,19 +52,23 @@ def main():
         ################
         # IMAGE LOGIC  #
         ################
-        # while True:
-        #     descripcion = input(
-        #         "Describe una escena del cuento para generar la imagen: "
-        #     )
-        #     if not descripcion or len(descripcion.strip()) < 10:
-        #         print(
-        #             "La descripción debe tener al menos 10 caracteres y no estar vacía. Intenta nuevamente."
-        #         )
-        #         continue
-        #     break
-        # imagen_path = generar_imagen(descripcion, cuento, nivel)
-        # print("\n--- Imagen generada ---\n")
-        # print(f"Ruta de la imagen: {imagen_path}")
+        while True:
+            descripcion = input(
+                "\nDescribe una escena del cuento para generar la imagen: "
+            )
+            if not descripcion or len(descripcion.strip()) < 10:
+                print(
+                    "La descripción debe tener al menos 10 caracteres y no estar vacía. Intenta nuevamente."
+                )
+                continue
+            break
+        
+        imagen_path = generar_imagen(descripcion, cuento, nivel)
+        
+        if imagen_path:
+            print(f"Imagen generada: {imagen_path}")
+        else:
+            print("No se pudo generar la imagen")
 
 if __name__ == "__main__":
     main()
