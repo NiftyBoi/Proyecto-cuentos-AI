@@ -1,48 +1,131 @@
->> Generador de Cuentos Infantiles:
-Este es un programa de consola que utiliza la API de OpenAI para generar cuentos infantiles personalizados. A partir de un tema y un nivel escolar ingresado por el usuario. El programa crea un cuento, genera una imagen y produce un archivo de audio con la narración del cuento.
+📚 Generador de Cuentos Infantiles
 
->> Características_
-- Generación de Cuentos: Crea historias originales para niños de 1° a 4° básico.
-- Generación de Imágenes: Produce una imagen basada en una descripción de una escena del cuento.
-- Generación de Audio: Convierte el texto del cuento en un archivo de audio MP3 para ser escuchado.
+Este es un programa de consola que utiliza la API de OpenAI para generar cuentos infantiles personalizados. A partir de un tema y un nivel escolar ingresado por el usuario, el programa:
 
->> Requisitos Previos:
-Para ejecutar este programa, necesitarás tener Python 3 instalado. Además, deberás instalar las siguientes librerías:
-- openai: Para interactuar con la API de OpenAI.
-- python-dotenv: Para gestionar las variables de entorno (como tu API key).
+✍️ Crea un cuento original.
 
->> Configuración:
-1. Crea un entorno vitual.
-2. debes contar con una clave de API de OpenAI.
-3. Archivo .env:
-   - En la misma carpeta donde se encuentran los archivos del proyecto, crea un nuevo archivo llamado .env.
-   - Dentro de este archivo, agrega la siguiente línea, reemplazando TU_API_KEY_AQUI con tu clave de API real:
-		OPENAI_API_KEY="TU_API_KEY_AQUI"
+🖼️ Genera una imagen relacionada con una escena del cuento.
 
->> Uso del Programa:
-1. Abre una terminal o línea de comandos.
-2. Navega hasta el directorio donde guardaste los archivos del proyecto.
-3. Ejecuta el script principal con el siguiente comando:
-   
-	src/main.py
-   
-   También puedes ejecutar haciendo click en el ícono de la parte superior, en caso que uses VSC.
+🔊 Produce un archivo de audio narrando la historia.
 
-4. Sigue las instrucciones que aparecerán en la consola:
-   - Primero, te pedirá el tema del cuento, en donde debe dar una breve descripción.
-   - Luego, te solicitará el nivel escolar (puedes usar números como 1, 2, o texto como "primero básico").
-   - Finalmente, después de generar el cuento y el audio, te pedirá que describas una escena para crear la imagen.
+Está diseñado para niños de 1° a 4° básico.
+
+🚀 Características
+
+Generación de Cuentos → Historias adaptadas según nivel escolar.
+
+Generación de Imágenes → Escenas ilustradas basadas en descripciones del cuento.
+
+Generación de Audio → Conversión de texto a narración en formato MP3.
+
+📦 Requisitos
+
+Antes de comenzar, asegúrate de tener instalado:
+
+Python 3.10+
+
+Librerías necesarias (ver más abajo).
+
+Una API Key de OpenAI válida.
+
+⚙️ Instalación y Configuración
+
+Clona este repositorio
+
+git clone https://github.com/tu_usuario/generador-cuentos.git
+cd generador-cuentos
 
 
->>Archivos del Proyecto:
-   - main.py: Es el punto inicial del programa y ordena la ejecución de los módulos.
-   - cuento_generator.py: Contiene las instrucciones para generar el texto del cuento.
-   - imagen_generator.py: Crear la imagen a partir de la descripción.
-   - audio_generator.py: Convierte el texto del cuento en un archivo de audio.
-   - openai_client.py: Gestiona la conexión y configuración del cliente de OpenAI.
-   - utils.py: Incluye funciones de ayuda, como la que normaliza el nivel escolar.
+Crea un entorno virtual
 
->>Archivos Generados de salida:
-Se crearán los siguientes archivos en el directorio del proyecto:
-   - cuento_audio.mp3: El archivo de audio con la narración del cuento.
-   - Una carpeta llamada imagenes_generadas/: Dentro de esta carpeta se guardará la imagen creada para el cuento.
+python -m venv venv
+
+
+Activa el entorno virtual
+
+En Windows:
+
+venv\Scripts\activate
+
+
+En Linux/MacOS:
+
+source venv/bin/activate
+
+
+Instala dependencias
+
+pip install -r requirements.txt
+
+
+Configura tu clave de API
+
+Crea un archivo .env en la raíz del proyecto con el siguiente contenido:
+
+OPENAI_API_KEY="TU_API_KEY_AQUI"
+
+▶️ Uso del Programa
+
+Ejecuta el script principal:
+
+python src/main.py
+
+
+El programa te guiará paso a paso:
+
+Ingresa un tema para el cuento (ejemplo: "animales en el bosque").
+
+Escribe el nivel escolar (ejemplo: 1, 2, o segundo básico).
+
+Una vez generado el cuento y el audio, describe una escena para crear la ilustración.
+
+📂 Estructura del Proyecto
+📦 generador-cuentos
+├── 📂 src
+│   ├── main.py                # Punto inicial del programa
+│   ├── cuento_generator.py     # Generación del texto del cuento
+│   ├── imagen_generator.py     # Creación de imágenes
+│   ├── audio_generator.py      # Narración en audio (MP3)
+│   ├── openai_client.py        # Configuración del cliente OpenAI
+│   └── utils.py                # Funciones auxiliares
+├── .env                        # Clave API de OpenAI (no subir a GitHub)
+├── requirements.txt            # Dependencias del proyecto
+└── README.md                   # Documentación
+
+📤 Archivos de Salida
+
+cuento_audio.mp3 → narración del cuento.
+
+imagenes_generadas/ → carpeta con las imágenes creadas.
+
+✅ Ejemplo
+>> Tema del cuento: Dinosaurios amigables en la escuela
+>> Nivel escolar: 2
+>> Escena para ilustrar: Un dinosaurio enseñando matemáticas a los niños
+
+
+Salida esperada:
+
+Un cuento adaptado al nivel 2° básico.
+
+Archivo de audio cuento_audio.mp3.
+
+Imagen generada en imagenes_generadas/.
+
+🤝 Contribuciones
+
+¡Las contribuciones son bienvenidas! Si quieres mejorar este proyecto:
+
+Haz un fork.
+
+Crea una rama con tu mejora: git checkout -b mi-mejora.
+
+Haz commit de los cambios: git commit -m "Agrega nueva funcionalidad".
+
+Haz push a la rama: git push origin mi-mejora.
+
+Abre un Pull Request.
+
+📜 Licencia
+
+Este proyecto está bajo la licencia MIT. Puedes usarlo y modificarlo libremente.
