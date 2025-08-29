@@ -1,26 +1,14 @@
-from utils import normalizar_nivel
-from cuento_generator import generar_cuento
+from core.cuento import CuentoGenerator
+from services.openai_service import OpenAIService
 
 def main():
-    while True:
-        print("\n--- Generador de Cuentos ---")
-        tema = input("Ingrese el tema del cuento (o 'salir' para terminar): ")
+    openai_service = OpenAIService()
 
-        if tema.lower() == "salir":
-            print("Programa finalizado. ¡Hasta la próxima!")
-            break
+    cuento_gen = CuentoGenerator(openai_service)
 
-        nivel_input = input("Ingrese el nivel (ej: 1, 1° básico, primero, etc.): ")
+    cuento = cuento_gen.generar_cuento("animales del bosque", "2° básico")
+    print(cuento)
 
-        try:
-            nivel = normalizar_nivel(nivel_input)
-        except ValueError as e:
-            print(f"{e}")
-            continue
-
-        cuento = generar_cuento(tema, nivel)
-        print("\n--- Cuento generado ---\n")
-        print(cuento)
 
 if __name__ == "__main__":
     main()

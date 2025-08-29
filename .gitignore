@@ -1,4 +1,43 @@
+# Entorno virtual
 venv/
-__pycache__/
-.mp3
 .env
+.venv/
+
+# Archivos de cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configuración local
+*.env
+*.ini
+*.toml
+*.cfg
+
+# Archivos de logs
+*.log
+
+# Archivos de base de datos locales
+*.sqlite3
+*.db
+
+# Archivos de salida del proyecto
+*.mp3
+*.wav
+*.ogg
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Archivos de Jupyter
+*.ipynb_checkpoints
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de editor/IDE
+.vscode/
+.idea/
+*.swp
