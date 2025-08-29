@@ -1,16 +1,16 @@
-📚 Generador de Cuentos Infantiles
+Generador de Cuentos Infantiles
 
 Este es un programa de consola que utiliza la API de OpenAI para generar cuentos infantiles personalizados. A partir de un tema y un nivel escolar ingresado por el usuario, el programa:
 
-✍️ Crea un cuento original.
+Crea un cuento original.
 
-🖼️ Genera una imagen relacionada con una escena del cuento.
+Genera una imagen relacionada con una escena del cuento.
 
-🔊 Produce un archivo de audio narrando la historia.
+Produce un archivo de audio narrando la historia.
 
 Está diseñado para niños de 1° a 4° básico.
 
-🚀 Características
+Características
 
 Generación de Cuentos → Historias adaptadas según nivel escolar.
 
@@ -18,7 +18,7 @@ Generación de Imágenes → Escenas ilustradas basadas en descripciones del cue
 
 Generación de Audio → Conversión de texto a narración en formato MP3.
 
-📦 Requisitos
+Requisitos
 
 Antes de comenzar, asegúrate de tener instalado:
 
@@ -80,7 +80,7 @@ Escribe el nivel escolar (ejemplo: 1, 2, o segundo básico).
 Una vez generado el cuento y el audio, describe una escena para crear la ilustración.
 
 📂 Estructura del Proyecto
-📦 generador-cuentos
+generador-cuentos
 ├── 📂 src
 │   ├── main.py                # Punto inicial del programa
 │   ├── cuento_generator.py     # Generación del texto del cuento
@@ -92,7 +92,7 @@ Una vez generado el cuento y el audio, describe una escena para crear la ilustra
 ├── requirements.txt            # Dependencias del proyecto
 └── README.md                   # Documentación
 
-📤 Archivos de Salida
+ Archivos de Salida
 
 cuento_audio.mp3 → narración del cuento.
 
