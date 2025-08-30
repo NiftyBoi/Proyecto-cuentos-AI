@@ -20,4 +20,12 @@ class OpenAIService:
             max_tokens=700
         )
         return respuesta.choices[0].message.content
-
+    
+    def generar_audio(self, texto: str, ruta_salida: str) -> str:
+        with self.client.audio.speech.with_streaming_response.create(
+            model="gpt-4o-mini-tts",
+            voice="alloy",
+            input=texto
+        ) as respuesta:
+            respuesta.stream_to_file(ruta_salida)
+        return ruta_salida
