@@ -26,7 +26,6 @@ class AudioGenerator:
             ) as respuesta:
                 respuesta.stream_to_file(ruta_completa)
 
-            print(f"\nAudio generado en: {ruta_completa}")
             return ruta_completa
 
         except Exception as e:

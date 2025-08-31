@@ -29,3 +29,18 @@ class OpenAIService:
         ) as respuesta:
             respuesta.stream_to_file(ruta_salida)
         return ruta_salida
+
+    def generar_imagen(self, prompt: str):
+        try:
+            response = self.client.images.generate(
+                model="gpt-image-1",
+                prompt=prompt,
+                size="1024x1024"
+            )
+            # Obtienes la imagen en base64 → decodificar a bytes
+            import base64
+            image_base64 = response.data[0].b64_json
+            return base64.b64decode(image_base64)
+        except Exception as e:
+            print(f"Error en generar_imagen: {e}")
+            return None
