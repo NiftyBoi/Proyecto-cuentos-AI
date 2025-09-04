@@ -9,22 +9,24 @@ from reportlab.platypus import Paragraph, Frame
 from reportlab.lib.units import cm
 
 
-# Funciones utilitarias
-def normalizar_nivel(nivel_usuario: str) -> str:
-    nivel_usuario = nivel_usuario.strip().lower()
+class NivelNormalizer:
+    """Convierte la entrada del usuario a un nivel estándar de básico."""
     equivalencias = {
-        "1": "1° básico", "1ro": "1° básico", "primero": "1° básico","primero basico": "1° básico",
-        "2": "2° básico", "2do": "2° básico", "segundo": "2° básico", "segundo basico": "2° básico",
-        "3": "3° básico", "3ro": "3° básico", "tercero": "3° básico","tecero basico": "3° básico",
-        "4": "4° básico", "4to": "4° básico", "cuarto": "4° básico","cuarto basico": "4° básico",
+        "1": "1° básico", "1ro": "1° básico", "primero": "1° básico", "1°": "1° básico", "primer": "1° básico",
+        "2": "2° básico", "2do": "2° básico", "segundo": "2° básico", "2°": "2° básico",
+        "3": "3° básico", "3ro": "3° básico", "tercero": "3° básico", "3°": "3° básico",
+        "4": "4° básico", "4to": "4° básico", "cuarto": "4° básico", "4°": "4° básico",
     }
-    if nivel_usuario in equivalencias:
-        return equivalencias[nivel_usuario]
-    else:
-        raise ValueError("Nivel inválido. Intente con 1, 2, 3 o 4.")
+
+    @classmethod
+    def normalizar(cls, nivel_usuario: str) -> str:
+        nivel_usuario = nivel_usuario.strip().lower()
+        if nivel_usuario in cls.equivalencias:
+            return cls.equivalencias[nivel_usuario]
+        else:
+            raise ValueError("Nivel inválido. Intente con 1, 2, 3 o 4.")
 
 
-# Clase para manejar outputs
 class OutputManager:
     def __init__(self, base_dir="outputs"):
         self.base_dir = base_dir
@@ -62,28 +64,23 @@ class OutputManager:
         c = canvas.Canvas(path, pagesize=A4)
         width, height = A4
 
-        # Márgenes
         margin_x, margin_y = 2*cm, 2*cm
         usable_width = width - 2*margin_x
         usable_height = height - 2*margin_y
 
-        # Título centrado
         c.setFont("Helvetica-Bold", 18)
         c.drawCentredString(width/2, height - margin_y, "Mini Historia")
 
-        # Imagen centrada debajo del título
         if image_path and os.path.exists(image_path):
             img = ImageReader(image_path)
             img_height = 8*cm
             img_width = usable_width
-            c.drawImage(img, margin_x, height - margin_y - img_height - 20, 
+            c.drawImage(img, margin_x, height - margin_y - img_height - 20,
                         width=img_width, height=img_height, preserveAspectRatio=True, mask='auto')
-
             texto_y = height - margin_y - img_height - 40
         else:
             texto_y = height - margin_y - 40
 
-        # Usamos Paragraph para ajustar el texto
         styles = getSampleStyleSheet()
         style = styles["Normal"]
         style.fontName = "Helvetica"
@@ -92,10 +89,8 @@ class OutputManager:
 
         story = [Paragraph(line, style) for line in cuento_texto.split("\n") if line.strip()]
 
-        # Frame para el texto dentro de márgenes
         frame = Frame(margin_x, margin_y, usable_width, texto_y - margin_y, showBoundary=0)
         frame.addFromList(story, c)
 
         c.save()
         return path
-
