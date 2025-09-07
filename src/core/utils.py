@@ -1,4 +1,5 @@
 import os
+import re
 import base64
 from datetime import datetime
 from reportlab.lib.pagesizes import A4
@@ -10,7 +11,7 @@ from reportlab.lib.units import cm
 
 
 class NivelNormalizer:
-    """Convierte la entrada del usuario a un nivel estándar de básico."""
+    #Convierte la entrada del usuario a un nivel estándar de básico.
     equivalencias = {
         "1": "1° básico", "1ro": "1° básico", "primero": "1° básico", "1°": "1° básico", "primer": "1° básico",
         "2": "2° básico", "2do": "2° básico", "segundo": "2° básico", "2°": "2° básico",
@@ -28,12 +29,20 @@ class NivelNormalizer:
 
 
 class OutputManager:
+    #Se encarga de guardar y organizar los archivos generados (texto, audio, imagen, PDF).
+
     def __init__(self, base_dir="outputs"):
         self.base_dir = base_dir
         os.makedirs(self.base_dir, exist_ok=True)
 
+    def sanitize_filename(self, name: str) -> str:
+        #Elimina caracteres inválidos para nombres en Windows/Linux/macOS.
+        safe = re.sub(r'[<>:"/\\|?*]', "_", name)  # reemplaza caracteres prohibidos
+        safe = safe.replace(" ", "_").lower()
+        return safe
+
     def create_story_folder(self, title: str) -> str:
-        safe_title = title.replace(" ", "_").lower()
+        safe_title = self.sanitize_filename(title)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         folder_name = f"{safe_title}_{timestamp}"
         path = os.path.join(self.base_dir, folder_name)
@@ -64,23 +73,27 @@ class OutputManager:
         c = canvas.Canvas(path, pagesize=A4)
         width, height = A4
 
-        margin_x, margin_y = 2*cm, 2*cm
-        usable_width = width - 2*margin_x
-        usable_height = height - 2*margin_y
+        # Márgenes
+        margin_x, margin_y = 2 * cm, 2 * cm
+        usable_width = width - 2 * margin_x
+        usable_height = height - 2 * margin_y
 
+        # Título
         c.setFont("Helvetica-Bold", 18)
-        c.drawCentredString(width/2, height - margin_y, "Mini Historia")
+        c.drawCentredString(width / 2, height - margin_y, "Mini Historia")
 
+        # Imagen
         if image_path and os.path.exists(image_path):
             img = ImageReader(image_path)
-            img_height = 8*cm
+            img_height = 8 * cm
             img_width = usable_width
-            c.drawImage(img, margin_x, height - margin_y - img_height - 20,
+            c.drawImage(img, margin_x, height - margin_y - img_height - 30,
                         width=img_width, height=img_height, preserveAspectRatio=True, mask='auto')
             texto_y = height - margin_y - img_height - 40
         else:
             texto_y = height - margin_y - 40
 
+        # Texto con salto de línea automático
         styles = getSampleStyleSheet()
         style = styles["Normal"]
         style.fontName = "Helvetica"

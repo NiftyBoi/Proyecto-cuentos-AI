@@ -18,6 +18,7 @@ class CuentoApp:
     def run(self):
         tema = self.pedir_input("Ingrese el tema del cuento (o 'salir'): ")
         nivel = self.pedir_nivel()
+        print(f"\nGenerando cuento para nivel {nivel} sobre el tema '{tema}'...\n")
 
         # Generar cuento
         cuento = self.cuento_gen.generar(tema, nivel)
