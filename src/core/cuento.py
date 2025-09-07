@@ -13,6 +13,11 @@ class CuentoGenerator:
         self.openai = openai_service
 
     def generar(self, tema: str, nivel: str) -> Cuento:
-        prompt = f"Genera un cuento para niños de {nivel} sobre {tema}"
+        prompt = (
+            f"Escribe un cuento para niños de {nivel} cuyo tema central sea: {tema}. "
+            "Los personajes y la trama deben estar relacionados con este tema. "
+            "Incluye un título que empiece con 'Título:' y termina el cuento con un párrafo "
+            "que empiece con 'Y desde ese día' o 'Así aprendieron que'."
+        )
         texto = self.openai.generar_texto(prompt)
         return Cuento(tema, nivel, texto)

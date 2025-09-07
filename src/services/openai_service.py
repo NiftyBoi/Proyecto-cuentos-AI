@@ -8,18 +8,35 @@ class OpenAIService:
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    def generar_texto(self, prompt: str) -> str:
-        respuesta = self.client.chat.completions.create(
-            model="gpt-4",
-            messages=[{"role": "user", "content": (
-                    "Eres un asistente que escribe cuentos para niños en educación básica. "
-                    "El cuento siempre debe tener un desenlace claro y un párrafo final de cierre "
-                    "que empiece con 'Y desde ese día...' o 'Así aprendieron que...'."
-                )}],
-            temperature=0.8,
-            max_tokens=700
-        )
-        return respuesta.choices[0].message.content
+    def generar_texto(self, user_prompt: str, temperature: float = 0.5, max_tokens: int = 700) -> str:
+
+        #Envía el `user_prompt` al modelo como message de usuario.
+        #Retorna el texto generado (limpio).
+        try:
+            # Mensaje system con reglas generales y de seguridad / estilo
+            system_msg = (
+                "Eres un asistente que escribe cuentos para niños en educación básica. "
+                "Usa un lenguaje sencillo, frases cortas y vocabulario apropiado para el grado. "
+                "Siempre incluye un desenlace claro y un párrafo final que empiece con "
+                "'Y desde ese día' o 'Así aprendieron que'."
+            )
+
+            response = self.client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_prompt}
+                ],
+                temperature=temperature,
+                max_tokens=max_tokens
+            )
+
+            texto = response.choices[0].message.content.strip()
+            return texto
+
+        except Exception as e:
+            print(f"[OpenAIService] Error al generar texto: {e}")
+            return None
     
     def generar_audio(self, texto: str, ruta_salida: str) -> str:
         with self.client.audio.speech.with_streaming_response.create(

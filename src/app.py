@@ -5,9 +5,9 @@ from core.imagen import ImagenGenerator
 from core.utils import NivelNormalizer, OutputManager
 
 class CuentoApp:
-    """
-    Orquesta el flujo de generación de cuentos, audios, imágenes y PDF.
-    """
+
+    #Orquesta el flujo de generación de cuentos, audios, imágenes y PDF.
+
     def __init__(self, openai_service):
         self.openai = openai_service
         self.cuento_gen = CuentoGenerator(openai_service)
@@ -48,7 +48,7 @@ class CuentoApp:
 
     def pedir_nivel(self) -> str:
         while True:
-            nivel_usuario = self.pedir_input("Ingresa el nivel educativo: ")
+            nivel_usuario = self.pedir_input("Ingresa el nivel educativo (desde 1ro a 4to basico): ")
             try:
                 return NivelNormalizer.normalizar(nivel_usuario)
             except ValueError as e:
