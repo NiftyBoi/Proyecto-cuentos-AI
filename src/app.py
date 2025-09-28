@@ -4,9 +4,10 @@ from core.audio import AudioGenerator
 from core.imagen import ImagenGenerator
 from core.utils import NivelNormalizer, OutputManager
 
+
 class CuentoApp:
 
-    #Orquesta el flujo de generación de cuentos, audios, imágenes y PDF.
+    # Orquesta el flujo de generación de cuentos, audios, imágenes y PDF.
 
     def __init__(self, openai_service):
         self.openai = openai_service
@@ -18,7 +19,7 @@ class CuentoApp:
     def run(self):
         tema = self.pedir_input("Ingrese el tema del cuento (o 'salir'): ")
         nivel = self.pedir_nivel()
-        print(f"\nGenerando cuento para nivel {nivel} sobre el tema '{tema}'...\n")
+        print(f"\nGenerando cuento para nivel {nivel}" "sobre el tema '{tema}'...\n")
 
         # Generar cuento
         cuento = self.cuento_gen.generar(tema, nivel)
@@ -49,7 +50,9 @@ class CuentoApp:
 
     def pedir_nivel(self) -> str:
         while True:
-            nivel_usuario = self.pedir_input("Ingresa el nivel educativo (desde 1ro a 4to basico): ")
+            nivel_usuario = self.pedir_input(
+                "Ingresa el nivel educativo (desde 1ro a 4to basico): "
+            )
             try:
                 return NivelNormalizer.normalizar(nivel_usuario)
             except ValueError as e:

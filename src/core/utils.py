@@ -11,12 +11,25 @@ from reportlab.lib.units import cm
 
 
 class NivelNormalizer:
-    #Convierte la entrada del usuario a un nivel estándar de básico.
+    # Convierte la entrada del usuario a un nivel estándar de básico.
     equivalencias = {
-        "1": "1° básico", "1ro": "1° básico", "primero": "1° básico", "1°": "1° básico", "primer": "1° básico",
-        "2": "2° básico", "2do": "2° básico", "segundo": "2° básico", "2°": "2° básico",
-        "3": "3° básico", "3ro": "3° básico", "tercero": "3° básico", "3°": "3° básico",
-        "4": "4° básico", "4to": "4° básico", "cuarto": "4° básico", "4°": "4° básico",
+        "1": "1° básico",
+        "1ro": "1° básico",
+        "primero": "1° básico",
+        "1°": "1° básico",
+        "primer": "1° básico",
+        "2": "2° básico",
+        "2do": "2° básico",
+        "segundo": "2° básico",
+        "2°": "2° básico",
+        "3": "3° básico",
+        "3ro": "3° básico",
+        "tercero": "3° básico",
+        "3°": "3° básico",
+        "4": "4° básico",
+        "4to": "4° básico",
+        "cuarto": "4° básico",
+        "4°": "4° básico",
     }
 
     @classmethod
@@ -29,14 +42,15 @@ class NivelNormalizer:
 
 
 class OutputManager:
-    #Se encarga de guardar y organizar los archivos generados (texto, audio, imagen, PDF).
+    # Se encarga de guardar y organizar los
+    # archivos generados (texto, audio, imagen, PDF).
 
     def __init__(self, base_dir="outputs"):
         self.base_dir = base_dir
         os.makedirs(self.base_dir, exist_ok=True)
 
     def sanitize_filename(self, name: str) -> str:
-        #Elimina caracteres inválidos para nombres en Windows/Linux/macOS.
+        # Elimina caracteres inválidos para nombres en Windows/Linux/macOS.
         safe = re.sub(r'[<>:"/\\|?*]', "_", name)  # reemplaza caracteres prohibidos
         safe = safe.replace(" ", "_").lower()
         return safe
@@ -68,7 +82,9 @@ class OutputManager:
             f.write(image_bytes)
         return path
 
-    def save_pdf(self, folder: str, cuento_texto: str, image_path: str, filename="cuento.pdf"):
+    def save_pdf(
+        self, folder: str, cuento_texto: str, image_path: str, filename="cuento.pdf"
+    ):
         path = os.path.join(folder, filename)
         c = canvas.Canvas(path, pagesize=A4)
         width, height = A4
@@ -76,7 +92,7 @@ class OutputManager:
         # Márgenes
         margin_x, margin_y = 2 * cm, 2 * cm
         usable_width = width - 2 * margin_x
-        usable_height = height - 2 * margin_y
+        # usable_height = height - 2 * margin_y
 
         # Título
         c.setFont("Helvetica-Bold", 18)
@@ -87,8 +103,15 @@ class OutputManager:
             img = ImageReader(image_path)
             img_height = 8 * cm
             img_width = usable_width
-            c.drawImage(img, margin_x, height - margin_y - img_height - 30,
-                        width=img_width, height=img_height, preserveAspectRatio=True, mask='auto')
+            c.drawImage(
+                img,
+                margin_x,
+                height - margin_y - img_height - 30,
+                width=img_width,
+                height=img_height,
+                preserveAspectRatio=True,
+                mask="auto",
+            )
             texto_y = height - margin_y - img_height - 40
         else:
             texto_y = height - margin_y - 40
@@ -100,9 +123,13 @@ class OutputManager:
         style.fontSize = 12
         style.leading = 15
 
-        story = [Paragraph(line, style) for line in cuento_texto.split("\n") if line.strip()]
+        story = [
+            Paragraph(line, style) for line in cuento_texto.split("\n") if line.strip()
+        ]
 
-        frame = Frame(margin_x, margin_y, usable_width, texto_y - margin_y, showBoundary=0)
+        frame = Frame(
+            margin_x, margin_y, usable_width, texto_y - margin_y, showBoundary=0
+        )
         frame.addFromList(story, c)
 
         c.save()

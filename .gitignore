@@ -1,28 +1,22 @@
-# Entorno virtual
+# ========================
+# ENTORNOS VIRTUALES
+# ========================
 venv/
-.env
 .venv/
+
+# ========================
+# VARIABLES DE ENTORNO
+# ========================
+.env
+*.env
+
+# ========================
+# SALIDAS DEL PROYECTO
+# ========================
+# Carpeta donde se guardan PDFs, audios, imágenes, etc.
 outputs/
 
-# Archivos de cache
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Configuración local
-*.env
-*.ini
-*.toml
-*.cfg
-
-# Archivos de logs
-*.log
-
-# Archivos de base de datos locales
-*.sqlite3
-*.db
-
-# Archivos de salida del proyecto
+# Archivos multimedia generados
 *.mp3
 *.wav
 *.ogg
@@ -30,15 +24,71 @@ __pycache__/
 *.jpg
 *.jpeg
 *.gif
+*.pdf
+*.txt
 
-# Archivos de Jupyter
+# ========================
+# ARCHIVOS DE CACHE Y COMPILADOS
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# ========================
+# CONFIGURACIÓN LOCAL
+# ========================
+*.ini
+*.toml
+*.cfg
+
+# Configuración de linters y herramientas
+.flake8
+.mypy_cache/
+.coverage
+coverage.xml
+
+# ========================
+# LOGS Y BASES DE DATOS LOCALES
+# ========================
+*.log
+*.sqlite3
+*.db
+
+# ========================
+# JUPYTER NOTEBOOKS
+# ========================
 *.ipynb_checkpoints
 
-# Archivos de sistema
+# ========================
+# ARCHIVOS DE SISTEMA
+# ========================
 .DS_Store
 Thumbs.db
 
-# Archivos de editor/IDE
+# ========================
+# EDITORES/IDEs
+# ========================
 .vscode/
 .idea/
 *.swp
+
+# ========================
+# SCRIPTS LOCALES
+# ========================
+# Scripts que solo uses localmente
+formatear.ps1
+
+# ========================
+# DEPENDENCIAS LOCALES
+# ========================
+# Pipenv y Poetry
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# ========================
+# DOCKER / CONTAINERS
+# ========================
+docker-compose.override.yml
+.env.docker
