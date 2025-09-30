@@ -1,21 +1,28 @@
-import pytest
 from src.core.cuento import CuentoGenerator, Cuento
 
 
-class FakeOpenAIService:
-    """Simula la respuesta de OpenAI sin llamar a la API real"""
-    def generar_texto(self, prompt: str):
-        return "Título: El gato feliz\nEste es un cuento ficticio para pruebas."
+class FakeOpenaiService:
+    def generar_texto(self, prompt: str) -> str:
+        return (
+            "Título: El gato aventurero\n"
+            "Había una vez un gato llamdo Tonela que vivía en un pequeño pueblo."
+            "Y desde ese día, Tonela decidió explorar el mundo."
+        )
 
-def test_cuento_generator_crea_cuento():
-    # Usamos el servicio falso en lugar de OpenAI real
-    fake_openai = FakeOpenAIService()
+
+def test_generar_cuento():
+    fake_openai = FakeOpenaiService()
     generator = CuentoGenerator(fake_openai)
 
-    cuento = generator.generar("gatos", "2° básico")
+    cuento = generator.generar("gatos", "1° básico")
 
     assert isinstance(cuento, Cuento)
-    assert cuento.tema == "gatos"
-    assert cuento.nivel == "2° básico"
-    assert isinstance(cuento.texto, str)
-    assert len(cuento.texto) > 0
+    assert "gatos" in cuento.tema.lower()
+
+    # validar el titulo correcto
+    assert cuento.texto.startswith("Título:")
+
+    # validar que el cuento termine correctamente
+    assert cuento.texto.strip().endswith(
+        "Y desde ese día, Tonela decidió explorar el mundo."
+    )

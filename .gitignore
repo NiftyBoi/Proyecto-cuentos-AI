@@ -16,6 +16,10 @@ venv/
 # Carpeta donde se guardan PDFs, audios, imágenes, etc.
 outputs/
 
+# Logs internos
+logs/
+*.log
+
 # Archivos multimedia generados
 *.mp3
 *.wav
